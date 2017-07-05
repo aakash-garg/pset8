@@ -97,6 +97,25 @@ function addMarker(place)
     marker.info = new google.maps.InfoWindow({
         content: "<div id='articles'><img id='loader' src='img/ajax-loader.gif' /></div>"
     });
+    
+    google.maps.event.addListener(marker, "click", function (e){ 
+        //article loading on click (event)..
+        
+        marker.info.open(map, this);
+        
+        var html = ["<ul>"];
+        
+        
+        $.getJSON("articles.php", parameter).done(function(data){
+            $.each(data, function(i, item){
+                html.push("<li><a href='"+item.link+"' target='_blank'>"+item.title+"</a></li>");
+            });
+            html.push("</ul>");
+            marker.info.setContent(html.join("\n"));
+        }).fail(function(jqXHR, textStatus, errorThrown){
+            console.log(errorThrown.toString());
+        });
+    });
 }
 
 /**

@@ -74,7 +74,29 @@ $(function() {
  */
 function addMarker(place)
 {
-    // TODO
+    var lat = place["latitude"];
+    var lon = place["longitude"];
+    var markerLatLong = new google.maps.LatLng(lat, lon);
+    var label = place["place_name"] + ", " + place["admin_name1"];
+    var icon = "img/icon.png";
+    var listItems = [];
+
+    marker = new MarkerWithLabel({
+        position: markerLatLong,
+        icon: icon,
+        map: map,
+        draggable: false,
+        labelContent: label,
+        labelAnchor: new google.maps.Point(-18, 24),
+        labelInBackground: false
+    });
+
+    markers.push(marker);
+
+    var parameter = "geo="+ place["postal_code"];
+    marker.info = new google.maps.InfoWindow({
+        content: "<div id='articles'><img id='loader' src='img/ajax-loader.gif' /></div>"
+    });
 }
 
 /**

@@ -74,11 +74,9 @@ $(function() {
  */
 function addMarker(place)
 {
-    var lat = place["latitude"];
-    var lon = place["longitude"];
-    var markerLatLong = new google.maps.LatLng(lat, lon);
+    var markerLatLong = new google.maps.LatLng(parseFloat(place.latitude), parseFloat(place.longitude));
     var label = place["place_name"] + ", " + place["admin_name1"];
-    var icon = "img/icon.png";
+    var icon = "http://maps.google.com/mapfiles/kml/pal2/icon31.png";
     var listItems = [];
 
     marker = new MarkerWithLabel({
@@ -92,6 +90,11 @@ function addMarker(place)
     });
 
     markers.push(marker);
+    
+    for (var i=0; i<markers.length; i++) 
+    {
+        markers[i].setVisible(true);
+    }
 
     var parameter = "geo="+ place["postal_code"];
     marker.info = new google.maps.InfoWindow({
